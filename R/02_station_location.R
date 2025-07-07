@@ -1,7 +1,6 @@
 
-## Load source files
-
 source("source/main.R")
+
 # Read PDF
 pdf_text_data <- pdf_text(paste0(RAW_PATH, "essd-2024-460.pdf"))
 
@@ -38,4 +37,3 @@ dt_sites <- dt[, .(site_id = Site, lat = as.numeric(Latitude), lon = as.numeric(
 
 # Save site table
 saveRDS(dt_sites, file = file.path(PROCESSED_PATH, "site_locations.rds"))
-

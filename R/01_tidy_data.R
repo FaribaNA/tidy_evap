@@ -4,7 +4,7 @@
 
 source("source/main.R")
 
-unzip(paste0(RAW_PATH,"aggregated_daily.zip"), exdir = RAW_PATH)
+unzip(paste0(RAW_PATH,"prolonged_daily_2000-2022.zip"), exdir = RAW_PATH)
 
 csv_files <- list.files(RAW_PATH, full.names = TRUE, pattern = ".csv")
 
@@ -12,7 +12,7 @@ csv_files <- list.files(RAW_PATH, full.names = TRUE, pattern = ".csv")
 
 all_data <- rbindlist(lapply(csv_files, function(file) {
   dt <- fread(file)
-  dt[, SITE_ID := tools::file_path_sans_ext(basename(file))]  
+  dt[, SITE_ID := gsub("_daily_prolonged", "", tools::file_path_sans_ext(basename(file)))]
   return(dt)
 }))
 
@@ -29,3 +29,4 @@ setnames(tidy_data, old= c("TIMESTAMP", "SITE_ID", "variable", "value"),
 
 # save data 
 saveRDS(tidy_data, paste0(PROCESSED_PATH,"tidy_data.rds"))
+
